@@ -7,6 +7,20 @@ export default function Game() {
   let pieces = CreatePieces()
 
   return (
-    <Board pieces={pieces}/>
+    <>
+      <div className="upper-container">
+        <div class="box eaten-pieces white">
+
+        </div>
+          <Board pieces={pieces}/>
+        <div class="box eaten-pieces black">
+
+        </div>
+      </div>
+      <div className="lower-container"></div>
+        <div className="box current-player">
+
+      </div>
+    </>
   );
 }

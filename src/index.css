@@ -8,6 +8,12 @@ body {
 
   display: flex;
   justify-content: center;
+
+  width: 100%;
+}
+
+#root {
+  width: 100%;
 }
 
 code {
@@ -18,22 +24,81 @@ code {
 .board {
   background-image: url('images/board.svg');
   background-size: cover;
-  width: 730px;
-  height: 730px;
+  width: 618px; height: 618px;
 }
 
 
 .piece {
-  height: 84px;
-  width: 87px;
+  height: 69px;
+  width: 73px;
+
+  transition: background 0.15s;
 }
 
 .selected {
   background: lightyellow;
 }
 
+.box {
+  background: #bbffb9;
+  border-radius: 50px;
+}
+
 tr {
-  max-height: 90px;
-  height: 90px;
-  width: 726px;
+  height: 75px;
+}
+
+.board-container {
+  width: 761px;
+  height: 669px;
+}
+
+.container1 {
+  display: flex;
+}
+
+.eaten-pieces {
+  width: 600px;
+  margin: 51px;
+  height: 293px;
+}
+
+.upper-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.lower-container {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+}
+
+.numbers {
+  height: 619px;
+  width: 47px;
+}
+
+.numbers p {
+  margin-top: 50.5px;
+  text-align: center;
+  font-size: 22px;
+}
+.numbers p:first-child {
+  margin-top: 25px;
+}
+
+.letters {
+  display: flex;
+  font-size: 16px;
+}
+
+.letters p {
+  margin-left: 67.5px;
+}
+
+.letters p:first-child {
+  margin-left: 77px;
 }

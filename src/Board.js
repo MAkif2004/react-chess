@@ -28,8 +28,10 @@ let startPos;
 
 export function Board({pieces}) {
   const [board, setBoard] = useState(initializeBoard(pieces));
-
   const [selectedPiece, setSelectedPiece] = useState(null);
+  const [numbersPos, setNumbersPos] = useState(<><p>8</p><p>7</p><p>6</p><p>5</p><p>4</p><p>3</p><p>2</p><p>1</p></>);
+  const [deadWhite, setDeadWhite] = useState([]);
+  const [deadBlack, setDeadBlack] = useState([]);
 
   let renderedBoard = [];
 
@@ -84,17 +86,6 @@ export function Board({pieces}) {
 
   }
 
-  if (isReversed) {
-    let oldBoard = renderedBoard;
-    renderedBoard = [];
-
-    console.log('bruh');
-
-    for (let i = board.length; i > 0; i--) {
-      renderedBoard.push(oldBoard[i-1]);
-    }
-  }
-
     function move(col = null, row = null, piece) {
         let newBoard = [...board];
 
@@ -109,15 +100,35 @@ export function Board({pieces}) {
             } else {
             if (legalPiece(col, row, newBoard, startPos)) {
                 startIsPressed = false;
+                isReversed = !isReversed;
 
                 if (isWhiteTurn !== newBoard[startPos[0]][startPos[1]].isWhite) {
                     return;
                 }
 
                 isWhiteTurn = !isWhiteTurn;
-                isReversed = !isReversed;
+
+                let reversedBoard = [];
+                for (let i = board.length; i > 0; i--) {
+                  reversedBoard.push(movePiece(col, row, newBoard, startPos, startPiece)[i-1]);
+                }
 
                 setBoard(movePiece(col, row, newBoard, startPos, startPiece));
+
+                setTimeout(reverse, 500);
+                function reverse() {
+                    if (isWhiteTurn) {
+                      setNumbersPos(<>
+                        <p>8</p><p>7</p><p>6</p><p>5</p><p>4</p><p>3</p><p>2</p><p>1</p>
+                      </>);
+                    } else {
+                      setNumbersPos(<>
+                          <p>1</p><p>2</p><p>3</p><p>4</p><p>5</p><p>6</p><p>7</p><p>8</p>
+                        </>);
+                    }
+
+                  setBoard(reversedBoard);
+                }
             } else {
 
                 if (startPos[0] == col && startPos[1] == row) {
@@ -125,7 +136,6 @@ export function Board({pieces}) {
                 }
 
                 startPos = [col, row];
-
                 startPiece = newBoard[col][row];
             }
           }
@@ -144,12 +154,23 @@ export function Board({pieces}) {
 
   return (
     <>
-      <div className="board">
-        <table>
-          <tbody>{renderedBoard}</tbody>
-        </table>
+    <div className="board-container">
+      <div className="container1">
+        <div className="numbers" id="numbers">
+          {numbersPos}
+        </div>
+        <div className="board">
+          <table>
+            <tbody>{renderedBoard}</tbody>
+          </table>
+        </div>
       </div>
-      <button onClick={() => resetBoard()}>Reset</button>
+      <div className="container2">
+        <div className="letters" id="letters">
+          <p>A</p><p>B</p><p>C</p><p>D</p><p>E</p><p>F</p><p>G</p><p>H</p>
+        </div>
+      </div>
+    </div>
     </>
   );
 }
